@@ -29,18 +29,22 @@ export const AuthProvider = ({ children }) => {
 
     const signin = async (user) => {
         try {
-            const res = await loginRequest(user)
-            console.log(res)
-            setUser(res.data);
-            setIsAuthenticated(true)
-
+          const res = await loginRequest(user);
+          console.log(res);
+          setUser(res.data);
+          setIsAuthenticated(true);
+      
+          // Guardar el token en localStorage
+          localStorage.setItem('token', res.data.token);
+      
         } catch (error) {
-            if (Array.isArray(error.response.data)) {
-                return setErrors(error.response.data)
-            }
-            setErrors([error.response.data.message])
+          if (Array.isArray(error.response.data)) {
+            return setErrors(error.response.data);
+          }
+          setErrors([error.response.data.message]);
         }
-    }
+      };
+      
 
     const logout = (() => {
         Cookies.remove("token");
