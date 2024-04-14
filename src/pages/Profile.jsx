@@ -3,7 +3,7 @@ import NavBar from '../components/Home/NavBar.jsx';
 import { useAuth } from '../context/authContext.jsx';
 import '../assets/css/Profile.css';
 import { useForm, Controller } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom/esm/react-router-dom.js';
 
 function Profile() {
     const { user, updateUser } = useAuth();
