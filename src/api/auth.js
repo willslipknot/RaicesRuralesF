@@ -16,7 +16,6 @@ import axios from './axios.js';
 export const registerRequest = async (user) => {
   try {
     const res = await axios.post('/register', user);
-    return res.data;
   } catch (error) {
     throw error.response;
   }
@@ -25,7 +24,6 @@ export const registerRequest = async (user) => {
 export const loginRequest = async (user) => {
   try {
     const res = await axios.post('/login', user);
-    return res.data;
   } catch (error) {
     throw error.response;
   }
@@ -33,7 +31,7 @@ export const loginRequest = async (user) => {
 
 export const verifyTokenRequest = async (token) => {
   try {
-    const res = await axios.get('/verifyToken', {
+    const res = await axios.get('/verify', {
       headers: {
         Authorization: token,
       },
