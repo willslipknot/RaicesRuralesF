@@ -79,11 +79,11 @@ function NavBar() {
                     <div className='logo' onClick={handleLogoClick} />
                     {isAuthenticated ? (
                         <>
-                            <li><Link to="/DashboardAdmin"><b className='menu'>Dashboard</b></Link></li>
-                            <li><Link to="/Actividades"><b className='menu'>Actividades</b></Link></li>
-                            <li><Link to="/Conductores"><b className='menu'>Conductores</b></Link></li>
-                            <li><Link to="/Reservas"><b className='menu'>Reservas</b></Link></li>
-                            <li><Link to="/Profile"><b className='menu'>Perfil</b></Link></li>
+                            <li><Link to="DashboardAdmin"><b className='menu'>Dashboard</b></Link></li>
+                            <li><Link to="Actividades"><b className='menu'>Actividades</b></Link></li>
+                            <li><Link to="Conductores"><b className='menu'>Conductores</b></Link></li>
+                            <li><Link to="Reservas"><b className='menu'>Reservas</b></Link></li>
+                            <li><Link to="Profile"><b className='menu'>Perfil</b></Link></li>
                             <li>
                                 <label className='labelcheck' htmlFor="menuCheckbox">
                                     <b className='menu'>
