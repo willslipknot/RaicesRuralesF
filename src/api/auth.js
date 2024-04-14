@@ -16,6 +16,7 @@ import axios from './axios.js';
 export const registerRequest = async (user) => {
   try {
     const res = await axios.post('/register', user);
+    return res;
   } catch (error) {
     throw error.response;
   }
