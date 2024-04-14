@@ -25,14 +25,6 @@ function Profile() {
         setUserData(user);
     }, [user]);
 
-    useEffect(() => {
-        // Redirigir a la misma página después de la recarga
-        if (performance.navigation.type === 1) {
-            window.location.replace('/Profile');
-        }
-    }, []);
-    
-
     const handleEditClick = () => {
         setIsEditing(true);
     };
