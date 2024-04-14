@@ -27,8 +27,11 @@ function Profile() {
 
     useEffect(() => {
         // Redirigir a la misma página después de la recarga
-        window.location.replace('/Profile');
+        if (performance.navigation.type === 1) {
+            window.location.replace('/Profile');
+        }
     }, []);
+    
 
     const handleEditClick = () => {
         setIsEditing(true);
