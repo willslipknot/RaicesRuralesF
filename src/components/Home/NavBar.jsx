@@ -72,8 +72,6 @@ function NavBar() {
             console.error('Error al iniciar sesión:', error);
         }
     };
-
-
     return (
         <div className="nav">
             <nav className="navbar">

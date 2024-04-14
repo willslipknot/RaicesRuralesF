@@ -39,7 +39,7 @@ export const verifyTokenRequest = async (token) => {
         Authorization: token,
       },
     });
-    return res.data;
+    return res;
   } catch (error) {
     throw error.response;
   }

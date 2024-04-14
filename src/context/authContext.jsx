@@ -57,7 +57,6 @@ export const AuthProvider = ({ children }) => {
         const res = await updateUserRequest(id, user)
      }
  
-
     useEffect(() => {
         if (errors.length > 0) {
             const timer = setTimeout(() => {
