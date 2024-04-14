@@ -67,7 +67,6 @@ function NavBar() {
     const handleLoginSubmit = async (values) => {
         try {
             await signin(values);
-            window.location.reload();
           
         } catch (error) {
             console.error('Error al iniciar sesión:', error);
