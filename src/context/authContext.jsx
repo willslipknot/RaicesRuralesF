@@ -1,6 +1,8 @@
+// context/AuthContext.js
+
 import { createContext, useContext, useEffect, useState } from "react";
 import { registerRequest, loginRequest, verifyTokenRequest, updateUserRequest } from '../api/auth.js'
-import Cookies from 'js-cookie'
+
 
 const AuthContext = createContext();
 
@@ -47,7 +49,7 @@ export const AuthProvider = ({ children }) => {
       
 
     const logout = (() => {
-        Cookies.remove("token");
+        localStorage.removeItem("token");
         setIsAuthenticated(false);
         setUser(null)
     })
@@ -68,32 +70,33 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         async function checkLogin() {
-            const cookies = Cookies.get();
-            if (!cookies.token) {
-                setIsAuthenticated(false);
-                setLoading(false);
-                return setUser(null);
+          const token = localStorage.getItem('token');
+          if (!token) {
+            setIsAuthenticated(false);
+            setLoading(false);
+            return setUser(null);
+          }
+      
+          try {
+            const res = await verifyTokenRequest(token);
+            console.log(res);
+            if (!res.data) {
+              setIsAuthenticated(false);
+              setLoading(false);
+              return;
             }
-
-            try {
-                const res = await verifyTokenRequest(cookies.token)
-                if (!res.data) {
-                    setIsAuthenticated(false);
-                    setLoading(false);
-                    return;
-                }
-                setIsAuthenticated(true);
-                console.log(res.data)
-                setUser(res.data);
-                setLoading(false);
-            } catch (error) {
-                setIsAuthenticated(false);
-                setUser(null);
-                setLoading(false);
-            }
+            setIsAuthenticated(true);
+            setUser(res.data);
+            setLoading(false);
+          } catch (error) {
+            setIsAuthenticated(false);
+            setUser(null);
+            setLoading(false);
+          }
         }
         checkLogin();
-    }, []);
+      }, []);
+      
 
 
     return (
@@ -112,7 +115,3 @@ export const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
-
-
-
-
