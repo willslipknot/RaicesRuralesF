@@ -3,14 +3,12 @@ import NavBar from '../components/Home/NavBar.jsx';
 import { useAuth } from '../context/authContext.jsx';
 import '../assets/css/Profile.css';
 import { useForm, Controller } from 'react-hook-form';
-import { useHistory } from 'react-router-dom/esm/react-router-dom.js';
 
 function Profile() {
     const { user, updateUser } = useAuth();
     const { handleSubmit, control, reset } = useForm();
     const [isEditing, setIsEditing] = useState(false);
     const [userData, setUserData] = useState(user);
-    const history = useHistory();
 
     useEffect(() => {
         reset({
@@ -29,9 +27,8 @@ function Profile() {
 
     useEffect(() => {
         // Redirigir a la misma página después de la recarga
-        history.replace('/Profile');
-    }, [history]);
-
+        window.location.replace('/Profile');
+    }, []);
 
     const handleEditClick = () => {
         setIsEditing(true);
