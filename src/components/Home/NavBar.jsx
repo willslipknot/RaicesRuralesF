@@ -80,7 +80,7 @@ function NavBar() {
                     {isAuthenticated ? (
                         <>
                             <li><a href="DashboardAdmin"><b className='menu'>Dashboard</b></a></li>
-                            <li><a href="Actividades"><b className='menu'>Actividades</b></a></li>
+                            <li><a href="/Actividades"><b className='menu'>Actividades</b></a></li>
                             <li><a href='Conductores'><b className='menu'>Conductores</b></a></li>
                             <li><a href='Reservas'><b className='menu'>Reservas</b></a></li>
                             <li><a href="Profile"><b className='menu'>Perfil</b></a></li>
