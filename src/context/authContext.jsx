@@ -36,7 +36,6 @@ export const AuthProvider = ({ children }) => {
           setUser(res.data);
           setIsAuthenticated(true);
       
-          // Guardar el token en localStorage
           localStorage.setItem('token', res.data.token);
       
         } catch (error) {

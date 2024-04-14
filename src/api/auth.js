@@ -22,12 +22,14 @@ export const registerRequest = async (user) => {
 };
 
 export const loginRequest = async (user) => {
-  try {
-    const res = await axios.post('/login', user);
-  } catch (error) {
-    throw error.response;
-  }
-};
+    try {
+      const res = await axios.post('/login', user);
+      return res;
+    } catch (error) {
+      throw error.response;
+    }
+  };
+  
 
 export const verifyTokenRequest = async (token) => {
   try {
