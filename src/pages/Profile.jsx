@@ -3,11 +3,14 @@ import NavBar from '../components/Home/NavBar.jsx';
 import { useAuth } from '../context/authContext.jsx';
 import '../assets/css/Profile.css';
 import { useForm, Controller } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 
 function Profile() {
     const { user, updateUser } = useAuth();
     const { handleSubmit, control, reset } = useForm();
     const [isEditing, setIsEditing] = useState(false);
+    const [userData, setUserData] = useState(user);
+    const history = useHistory();
 
     useEffect(() => {
         reset({
@@ -18,6 +21,17 @@ function Profile() {
             apellido: user.apellido || '',
         });
     }, [user, reset]);
+
+    useEffect(() => {
+        // Actualizar los datos del usuario cuando el componente se monte
+        setUserData(user);
+    }, [user]);
+
+    useEffect(() => {
+        // Redirigir a la misma página después de la recarga
+        history.replace('/Profile');
+    }, [history]);
+
 
     const handleEditClick = () => {
         setIsEditing(true);
@@ -33,7 +47,7 @@ function Profile() {
             console.log(data)
             await updateUser(user.id, data);
             setIsEditing(false);
-            window.location.reload();
+            setUserData({ ...userData, ...data });
             
         } catch (error) {
             console.error('Error al actualizar el perfil:', error);
