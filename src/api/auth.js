@@ -1,10 +1,9 @@
-// api/auth.js
 
 import axios from 'axios';
 
 export const registerRequest = async (user) => {
   try {
-    const res = await axios.post('/api/register', user);
+    const res = await axios.post('/register', user);
     return res.data;
   } catch (error) {
     throw error.response;
@@ -13,7 +12,7 @@ export const registerRequest = async (user) => {
 
 export const loginRequest = async (user) => {
   try {
-    const res = await axios.post('/api/login', user);
+    const res = await axios.post('/login', user);
     return res.data;
   } catch (error) {
     throw error.response;
@@ -22,7 +21,7 @@ export const loginRequest = async (user) => {
 
 export const verifyTokenRequest = async (token) => {
   try {
-    const res = await axios.get('/api/verifyToken', {
+    const res = await axios.get('/verifyToken', {
       headers: {
         Authorization: token,
       },
@@ -35,7 +34,7 @@ export const verifyTokenRequest = async (token) => {
 
 export const updateUserRequest = async (id, user) => {
   try {
-    const res = await axios.put(`/api/users/${id}`, user);
+    const res = await axios.put(`/users/${id}`, user);
     return res.data;
   } catch (error) {
     throw error.response;
