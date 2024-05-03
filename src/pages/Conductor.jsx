@@ -97,7 +97,7 @@ function Conductor() {
         formData.append('licencia', data.licencia);
         formData.append('vehiculo', data.vehiculo);
         formData.append('clase', data.clase);
-        formData.append('foto', file);
+        formData.append('imagen', file);
 
         console.log("Datos del formulario:", data);
 
@@ -105,6 +105,8 @@ function Conductor() {
 
         setMensaje('Conductor creado exitosamente');
         reset();
+        window.location.reload();
+        window.location.reload();
 
         setTimeout(() => {
             setMensaje('');
@@ -130,7 +132,7 @@ function Conductor() {
         formData.append('propietario', data.propietario);
         formData.append('identificacion', data.identificacion);
         formData.append('num_ident', data.num_ident);
-        formData.append('imagenes', file);
+        formData.append('imagen', file);
 
         console.log("Datos del formulario:", data);
 
@@ -138,6 +140,8 @@ function Conductor() {
 
         setMensaje('Vehiculo creado exitosamente');
         reset();
+        window.location.reload();
+        window.location.reload();
 
         setTimeout(() => {
             setMensaje('');
@@ -238,7 +242,7 @@ function Conductor() {
 
                                 <div className="form-group-image">
                                     <input id='inputFile' type="file" onChange={handleImagenChange} className='formulario1' />
-                                    <input type="text" value={nombreArchivo} hidden className='formulario' {...register("foto")} />
+                                    <input type="text" value={nombreArchivo} hidden className='formulario' {...register("imagen")} />
                                 </div>
 
 
@@ -330,7 +334,7 @@ function Conductor() {
                                         <br></br>
                                         <div className="form-group-image">
                                             <input id='inputFile' type="file" onChange={handleImagenChange} className='formulario1' />
-                                            <input type="text" value={nombreArchivo1} hidden className='formulario' {...register("imagenes")} />
+                                            <input type="text" value={nombreArchivo1} hidden className='formulario' {...register("imagen")} />
                                         </div>
                                     </div>
                                 </div>

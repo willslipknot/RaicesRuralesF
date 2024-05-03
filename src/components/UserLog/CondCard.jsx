@@ -33,14 +33,11 @@ function CondCard({ cond }) {
                 setValue('licencia', cond.licencia);
                 setValue('vehiculo', cond.vehiculo);
                 setValue('clase', cond.clase);
+                setValue('imagen', cond.imagen);
             }
             loadCond();
         }
     }, [selectedId]);
-
-    const rutaImagen = '/src/assets/images/' + cond.foto;
-
-
 
     const handleOpenModal = () => {
         setSelectedId(cond.id);
@@ -67,6 +64,7 @@ function CondCard({ cond }) {
             setMensaje('');
         }, 3000);
 
+        window.location.reload();
         window.location.reload();
 
     });
@@ -145,7 +143,7 @@ function CondCard({ cond }) {
     return (
         <div className="card">
             <div className='title'>
-                <img className='imagen_p1' src={rutaImagen} alt="Imagen" />
+                <img className='imagen_p1' src={cond.imagen} alt="Imagen" />
                 <div>
                     <h1>Nombre: {cond.nombre} {cond.apellido}</h1>
                     <p>Tipo: {cond.clase}</p>

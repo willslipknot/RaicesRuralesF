@@ -34,13 +34,11 @@ function VehCard({ veh }) {
                 setValue('propietario', veh.propietario);
                 setValue('identificacion', veh.identificacion);
                 setValue('num_ident', veh.num_ident);
+                setValue('imagen', veh.imagen);
             }
             loadVeh();
         }
     }, [selectedId]);
-
-    const rutaImagen = '/src/assets/images/' + veh.imagenes;
-
 
 
     const handleOpenModal = () => {
@@ -62,7 +60,7 @@ function VehCard({ veh }) {
     return (
         <div className="card">
             <div className='title'>
-                <img className='imagen_p1' src={rutaImagen} alt="Imagen" />
+            <img className='imagen_p1' src={veh.imagen} alt="Imagen" />
                 <div>
                     <h1>Marca: {veh.marca} </h1>
                     <p>Color {veh.color}</p>

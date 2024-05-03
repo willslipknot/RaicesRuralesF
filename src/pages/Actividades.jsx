@@ -6,20 +6,22 @@ import { useActs } from '../context/actContext';
 import ActCard from '../components/UserLog/ActCard'
 
 const opciones = [
-    { label: 'Estadia', value: 'Estadia' },
-    { label: 'Alimentacion', value: 'Alimentacion' },
-    { label: 'Actividad', value: 'Actividad' },
+    { label: 'Estadia', value: 'cdca80ef-6f8d-478b-94f1-80e1e67da46d' },
+    { label: 'Alimentacion', value: '35a0e8e0-728c-4712-81fd-1df805a0e294' },
+    { label: 'Actividad', value: '859a6b07-ecd9-4c13-bc1c-6894d8fb0520' },
 ];
 
+const colores = ['#FFC0CB', '#DDA0DD', '#7B68EE', '#7FFFD4', '#90EE90'];
+
 function Actividades() {
-    const { register, handleSubmit, reset } = useForm();
+    const { register, handleSubmit, reset, watch  } = useForm();
     const { createActs, getActs, acts } = useActs();
     const [tip, setTip] = useState('');
     const [file, setFile] = useState(null);
     const [nombreArchivo, setNombreArchivo] = useState('');
     const [mensaje, setMensaje] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
-    const BASE_URL = 'http://localhost:3001';
+    
 
     const handleOpenModal = () => {
         setModalOpen(true);
@@ -45,7 +47,10 @@ function Actividades() {
 
         const formData = new FormData();
         formData.append('nombre', data.nombre);
-        formData.append('direccion', data.direccion);
+        formData.append('coordenadasX', data.coordenadasX);
+        formData.append('coordenadasY', data.coordenadasY);
+        formData.append('hora_inicio', data.hora_inicio);
+        formData.append('hora_fin', data.hora_fin);
         formData.append('descripcion', data.descripcion);
         formData.append('tipo', data.tipo);
         formData.append('imagen', file);
@@ -56,6 +61,7 @@ function Actividades() {
 
         setMensaje('Actividad creada exitosamente');
         reset();
+        window.location.reload();
 
 
         setTimeout(() => {
@@ -82,11 +88,10 @@ function Actividades() {
                 <button onClick={handleOpenModal}>Crear Actividad</button>
             </div>
             <div className="actividad-content">
-                <div className='cards'>{
-                    acts.map((act) => (
-                        <ActCard key={act.id} act={act} />
-                    ))
-                }
+            <div className='cards'>{
+                acts.map((act, index) => (
+                    <ActCard key={act.id} act={act} color={colores[index % colores.length]} />
+                ))}
                 </div>
                 {modalOpen && (
                     <div className="modal" onClick={handleCloseModal}>
@@ -99,8 +104,23 @@ function Actividades() {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="direccion">Direccion</label>
-                                    <input type="text" className='formulario'  {...register("direccion", { required: true })} />
+                                    <label htmlFor="direccion">Coordenada X</label>
+                                    <input type="text" className='formulario' {...register("coordenadasX", { required: true })} />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="direccion">Coordenada Y</label>
+                                    <input type="text" className='formulario' {...register("coordenadasY", { required: true })} />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="direccion">Hora Inicio</label>
+                                    <input type="time" className='formulario' {...register("hora_inicio", { required: true })} />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="direccion">Hora Final</label>
+                                    <input type="time" className='formulario' {...register("hora_fin", { required: true })} />
                                 </div>
 
                                 <div className="form-group">

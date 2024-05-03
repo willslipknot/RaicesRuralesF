@@ -1,68 +1,96 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import '../../assets/css/ActCard.css';
-import { useActs } from '../../context/actContext'; 
+import { useActs } from '../../context/actContext';
 
 const opciones = [
-    { label: 'Estadia', value: 'Estadia' },
-    { label: 'Alimentacion', value: 'Alimentacion' },
-    { label: 'Actividad', value: 'Actividad' },
+    { label: 'Estadia', value: 'cdca80ef-6f8d-478b-94f1-80e1e67da46d' },
+    { label: 'Alimentacion', value: '35a0e8e0-728c-4712-81fd-1df805a0e294' },
+    { label: 'Actividad', value: '859a6b07-ecd9-4c13-bc1c-6894d8fb0520' },
 ];
 
 function ActCard({ act }) {
 
     const [modalOpen, setModalOpen] = useState(false);
-    const { deleteAct, getAct, updateAct} = useActs()
+    const { deleteAct, getAct, updateAct } = useActs()
     const [selectedId, setSelectedId] = useState(null);
-    const { register, handleSubmit, reset,setValue } = useForm();
+    const { register, handleSubmit, reset, setValue } = useForm();
     const [tip, setTip] = useState('');
     const [file, setFile] = useState(null);
     const [nombreArchivo, setNombreArchivo] = useState('');
     const [mensaje, setMensaje] = useState('');
-    
+
 
     useEffect(() => {
         if (selectedId !== null) {
-            async function loadAct() {  
+            async function loadAct() {
                 const act = await getAct(selectedId);
                 console.log(act);
                 setValue('nombre', act.nombre);
                 setValue('direccion', act.direccion);
                 setValue('descripcion', act.descripcion);
                 setValue('tipo', act.tipo);
-                setValue('imagen', act.imagen)
+                setValue('imagen', act.imagen);
+                setValue('coordenadasX', act.coordenadasX);
+                setValue('coordenadasY', act.coordenadasY);
+                setValue('hora_inicio', act.hora_inicio);
+                setValue('hora_fin', act.hora_fin);
             }
             loadAct();
         }
     }, [selectedId]);
-    
-    const rutaImagen = '/src/assets/images/'+ act.imagen;
 
     const handleOpenModal = () => {
         setSelectedId(act.id);
         setModalOpen(true);
-        
+
     };
 
     const handleCloseModal = () => {
         setModalOpen(false);
     };
 
-    const onSubmit = handleSubmit((data) => {
-        console.log("Datos del formulario:", data);
-        
-        if (selectedId !== null){
-            updateAct(selectedId, data)
-        
-        setMensaje('Actividad editada exitosamente');
+    const handleImagenChange = (e) => {
+        setFile(e.target.files[0])
+    }
 
+
+    const onSubmit = handleSubmit(async (data) => {
+        try {
+            console.log("Datos del formulario:", data);
+
+            if (selectedId !== null) {
+                if (file) {
+                    const formData = new FormData();
+
+                    formData.append('nombre', data.nombre);
+                    formData.append('descripcion', data.descripcion);
+                    formData.append('tipo', data.tipo);
+                    formData.append('coordenadasX', data.coordenadasX);
+                    formData.append('coordenadasY', data.coordenadasY);
+                    formData.append('hora_inicio', data.hora_inicio);
+                    formData.append('hora_fin', data.hora_fin);
+                    formData.append('imagen', file);
+
+                    await updateAct(selectedId, formData);
+                } else {
+                    await updateAct(selectedId, data);
+                }
+
+                setMensaje('Actividad editada exitosamente');
+            }
+        } catch (error) {
+            console.error("Error al editar la actividad:", error);
+            setMensaje('Error al editar la actividad');
+        } finally {
+            setTimeout(() => {
+                setMensaje('');
+                window.location.reload();
+                window.location.reload();
+            }, 3000);
         }
-        setTimeout(() => {
-            setMensaje('');
-        }, 3000);
-
-        window.location.reload();
     });
+
 
     const handleLimpiarClick = () => {
         reset();
@@ -74,23 +102,13 @@ function ActCard({ act }) {
         setTip(e.target.value);
     };
 
-    const handleImagenChange = (e) => {
-        const files = (e.target.files[0]);
-        setNombreArchivo(files.name);
-        
-        if (files) {
-            setFile(files);
-        }
-    };
-
-
     return (
         <div className="card">
             <div className='title'>
-                <img className='imagen_p1' src={rutaImagen} alt="Imagen" />
+                <img className='imagen_p1' src={act.imagen} alt="Imagen" />
                 <div>
                     <h1>Nombre: {act.nombre}</h1>
-                    <p>Tipo: {act.tipo}</p><br />
+                    <p>Tipo: {opciones.find(option => option.value === act.tipo)?.label}</p><br />
                     <div className='buttons'>
                         <button onClick={handleOpenModal}>Editar</button>&nbsp;
                         {modalOpen && (
@@ -104,8 +122,23 @@ function ActCard({ act }) {
                                         </div>
 
                                         <div className="form-group">
-                                            <label htmlFor="direccion">Direccion</label>
-                                            <input type="text" className='formulario'  {...register("direccion", { required: true })} />
+                                            <label htmlFor="direccion">Coordenada X</label>
+                                            <input type="text" className='formulario' {...register("coordenadasX", { required: true })} />
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label htmlFor="direccion">Coordenada Y</label>
+                                            <input type="text" className='formulario' {...register("coordenadasY", { required: true })} />
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label htmlFor="direccion">Hora Inicio</label>
+                                            <input type="time" className='formulario' {...register("hora_inicio", { required: true })} />
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label htmlFor="direccion">Hora Final</label>
+                                            <input type="time" className='formulario' {...register("hora_fin", { required: true })} />
                                         </div>
 
                                         <div className="form-group">
@@ -131,7 +164,7 @@ function ActCard({ act }) {
                                         </div>
 
                                         <div className="form-group">
-                                            <button type='submit'onClick={handleSubmit}>Editar</button>
+                                            <button type='submit' onClick={handleSubmit}>Editar</button>
                                             <button type='button' onClick={handleLimpiarClick}>Limpiar</button>
                                         </div>
 
